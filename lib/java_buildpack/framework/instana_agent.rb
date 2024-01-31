@@ -38,7 +38,6 @@ module JavaBuildpack
         ) do
           download_jar
         end
-        @droplet.copy_resources
       end
 
       def release
@@ -68,6 +67,7 @@ module JavaBuildpack
 
       def standalone_agent_download_url
         download_uri = "https://_:#{credentials[AGENT_KEY]}@artifact-public.instana.io/artifactory/rel-generic-instana-virtual/com/instana/standalone-collector-jvm/1.264.1/standalone-collector-jvm-1.264.1.jar"
+        @logger.debug {"Instana Agent Download Url: #{download_uri}"}
         ['latest', download_uri]
       end
 

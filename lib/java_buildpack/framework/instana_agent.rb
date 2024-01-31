@@ -36,7 +36,7 @@ module JavaBuildpack
         JavaBuildpack::Util::Cache::InternetAvailability.instance.available(
           true, 'Downloading Instana Collector Agent'
         ) do
-          download_jar
+          download(@version, @uri) { |file| expand file }
         end
       end
 
@@ -50,7 +50,7 @@ module JavaBuildpack
       end
 
       def agent_path
-        @droplet.sandbox + jar_name
+        @droplet.sandbox + 'standalone-collector-jvm-1.264.1.jar'
       end
 
       def credentials
@@ -68,6 +68,11 @@ module JavaBuildpack
       def standalone_agent_download_url
         download_uri = "https://_:#{credentials[AGENT_KEY]}@artifact-public.instana.io/artifactory/rel-generic-instana-virtual/com/instana/standalone-collector-jvm/1.264.1/standalone-collector-jvm-1.264.1.jar"
         ['latest', download_uri]
+      end
+
+      def expand(file)
+        FileUtils.mkdir_p(@droplet.sandbox)
+        FileUtils.mv(file.path, @droplet.sandbox)
       end
 
       def setup_variables

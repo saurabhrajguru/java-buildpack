@@ -63,6 +63,8 @@ module JavaBuildpack
       FILTER = /instana/.freeze
       AGENT_KEY = 'agentkey'
       ENDPOINT_URL = 'endpointurl'
+      INSTANA_AGENT_KEY='INSTANA_AGENT_KEY'
+      INSTANA_ENDPOINT_URL='INSTANA_ENDPOINT_URL'
 
       def standalone_agent_download_url
         download_uri = "https://_:#{credentials[AGENT_KEY]}@artifact-public.instana.io/artifactory/rel-generic-instana-virtual/com/instana/standalone-collector-jvm/1.264.1/standalone-collector-jvm-1.264.1.jar"

@@ -36,7 +36,7 @@ module JavaBuildpack
         JavaBuildpack::Util::Cache::InternetAvailability.instance.available(
           true, 'Downloading Instana Collector Agent'
         ) do
-          download_jar('standalone-collector-jvm.jar')
+          download_jar
         end
         @droplet.copy_resources
       end
@@ -51,7 +51,7 @@ module JavaBuildpack
       end
 
       def agent_path
-        @droplet.sandbox + 'standalone-collector-jvm.jar'
+        @droplet.sandbox + jar_name
       end
 
       def credentials

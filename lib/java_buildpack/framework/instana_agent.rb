@@ -33,11 +33,7 @@ module JavaBuildpack
       end
 
       def compile
-        JavaBuildpack::Util::Cache::InternetAvailability.instance.available(
-          true, 'Downloading Instana Collector Agent'
-        ) do
-          download_jar
-        end
+        download_jar
         @droplet.copy_resources
       rescue StandardError => e
         @logger.warn('Instana Download failed :' + e.to_s)

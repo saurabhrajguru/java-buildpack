@@ -28,13 +28,12 @@ module JavaBuildpack
         @configuration = context[:configuration]
         @droplet = context[:droplet]
 
-        @version, @uri = standalone_agent_download_url if supports?
+        # @version, @uri = standalone_agent_download_url if supports?
         @logger = JavaBuildpack::Logging::LoggerFactory.instance.get_logger InstanaAgent
       end
 
       def compile
         download_jar
-        @droplet.copy_resources
       rescue StandardError => e
         @logger.warn('Instana Download failed :' + e.to_s)
       end

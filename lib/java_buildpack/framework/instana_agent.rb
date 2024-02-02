@@ -64,8 +64,8 @@ module JavaBuildpack
       INSTANA_ENDPOINT_URL = 'INSTANA_ENDPOINT_URL'
 
       def standalone_agent_download_url
-        # download_uri = "https://_:#{credentials[AGENT_KEY]}@artifact-public.instana.io/artifactory/rel-generic-instana-virtual/com/instana/standalone-collector-jvm/1.264.1/standalone-collector-jvm-1.264.1.jar"
-        download_uri = 'https://imagestorage04.blob.core.windows.net/pub/standalone-collector-jvm-1.264.1.jar'
+        download_uri = "https://_:#{credentials[AGENT_KEY]}@artifact-public.instana.io/artifactory/rel-generic-instana-virtual/com/instana/standalone-collector-jvm/1.264.1/standalone-collector-jvm-1.264.1.jar"
+        #download_uri = 'https://imagestorage04.blob.core.windows.net/pub/standalone-collector-jvm-1.264.1.jar'
         ['latest', download_uri]
       end
 

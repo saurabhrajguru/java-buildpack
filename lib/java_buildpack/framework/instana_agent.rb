@@ -39,7 +39,7 @@ module JavaBuildpack
       end
 
       def release
-        @droplet.java_opts.add_agentpath(agent_path)
+        @droplet.java_opts.add_javaagent(agent_path)
         setup_variables
       end
 

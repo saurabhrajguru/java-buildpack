@@ -28,7 +28,7 @@ module JavaBuildpack
         @configuration = context[:configuration]
         @droplet = context[:droplet]
 
-        # @version, @uri = standalone_agent_download_url if supports?
+        @version, @uri = standalone_agent_download_url if supports?
         @logger = JavaBuildpack::Logging::LoggerFactory.instance.get_logger InstanaAgent
       end
 

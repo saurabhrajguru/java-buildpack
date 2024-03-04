@@ -35,7 +35,7 @@ module JavaBuildpack
       def compile
         download_jar
       rescue StandardError => e
-        @logger.warn('Instana Download failed :' + e.to_s)
+        @logger.error('Instana Download failed :' + e.to_s)
       end
 
       def release
@@ -62,10 +62,11 @@ module JavaBuildpack
       ENDPOINT_URL = 'endpointurl'
       INSTANA_AGENT_KEY = 'INSTANA_AGENT_KEY'
       INSTANA_ENDPOINT_URL = 'INSTANA_ENDPOINT_URL'
+      INSTANA_BASE_URL = 'artifact-public.instana.io/artifactory/'
+      INSTANA_COLLECTOR_PATH = 'rel-generic-instana-virtual/com/instana/standalone-collector-jvm'
 
       def standalone_agent_download_url
-        download_uri = "https://_:#{credentials[AGENT_KEY]}@artifact-public.instana.io/artifactory/rel-generic-instana-virtual/com/instana/standalone-collector-jvm/1.264.1/standalone-collector-jvm-1.264.1.jar"
-        #download_uri = 'https://imagestorage04.blob.core.windows.net/pub/standalone-collector-jvm-1.264.1.jar'
+        download_uri = "https://_:#{credentials[AGENT_KEY]}@#{INSTANA_BASE_URL}/#{INSTANA_COLLECTOR_PATH}/[RELEASE]/standalone-collector-jvm-[RELEASE].jar"
         ['latest', download_uri]
       end
 

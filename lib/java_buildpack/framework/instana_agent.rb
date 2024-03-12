@@ -17,6 +17,7 @@
 
 module JavaBuildpack
   module Framework
+    # Encapsulates the functionality for enabling Instana support.
     class InstanaAgent < JavaBuildpack::Component::VersionedDependencyComponent
 
       # Creates an instance
@@ -32,25 +33,30 @@ module JavaBuildpack
         @logger = JavaBuildpack::Logging::LoggerFactory.instance.get_logger InstanaAgent
       end
 
+      # (see JavaBuildpack::Component::BaseComponent#compile)
       def compile
         download_jar
       rescue StandardError => e
         @logger.error('Instana Download failed :' + e.to_s)
       end
 
+      # (see JavaBuildpack::Component::BaseComponent#release)
       def release
         @droplet.java_opts.add_javaagent(agent_path)
         setup_variables
       end
 
+      # (see JavaBuildpack::Component::VersionedDependencyComponent#supports?)
       def supports?
         @application.services.one_service? FILTER, AGENT_KEY, ENDPOINT_URL
       end
 
+      # Provides the Agent Path
       def agent_path
         @droplet.sandbox + jar_name
       end
 
+      # Provides the Credentials
       def credentials
         @application.services.find_service(FILTER, AGENT_KEY, ENDPOINT_URL)['credentials']
       end
@@ -62,11 +68,11 @@ module JavaBuildpack
       ENDPOINT_URL = 'endpointurl'
       INSTANA_AGENT_KEY = 'INSTANA_AGENT_KEY'
       INSTANA_ENDPOINT_URL = 'INSTANA_ENDPOINT_URL'
-      INSTANA_BASE_URL = 'artifact-public.instana.io/artifactory/'
+      INSTANA_BASE_URL = 'artifact-public.instana.io/artifactory'
       INSTANA_COLLECTOR_PATH = 'rel-generic-instana-virtual/com/instana/standalone-collector-jvm'
 
       def standalone_agent_download_url
-        download_uri = "https://_:#{credentials[AGENT_KEY]}@#{INSTANA_BASE_URL}/#{INSTANA_COLLECTOR_PATH}/[RELEASE]/standalone-collector-jvm-[RELEASE].jar"
+        download_uri = "https://_:#{credentials[AGENT_KEY]}@#{INSTANA_BASE_URL}/#{INSTANA_COLLECTOR_PATH}/%5BRELEASE%5D/standalone-collector-jvm-%5BRELEASE%5D.jar"
         ['latest', download_uri]
       end
 
